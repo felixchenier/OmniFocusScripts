@@ -27,7 +27,7 @@
 
 	
 		// *****************************************************
-		// Add folder TestTrello if it doesn't already exist
+		// Add folder ofTrelloFolderName if it doesn't already exist
 		// *****************************************************
 		ofTrelloFolder = folders.byName(ofTrelloFolderName)
 		if (ofTrelloFolder == null) {
@@ -47,7 +47,7 @@
 							task.markComplete()
 						}
 					})
-				project.markComplete()
+				// project.markComplete()
 			})
 	
 		// *****************************************************
@@ -86,7 +86,7 @@
 		}
 		
 		function processCard(card, board, list){
-			console.log(board.name + ' ' + list.name + ' ' + card.name)
+			//console.log(board.name + ' ' + list.name + ' ' + card.name)
 
 			var projectName = board.name
 			var taskName = "Trello : " + list.name + " : " + card.name
