@@ -3,7 +3,7 @@
 	"targets": ["omnifocus"],
 	"author": "Félix Chénier",
 	"identifier": "com.felixchenier.of.trellotoomnifocus",
-	"version": "1.0",
+	"version": "1.1",
 	"description": "Update Trello boards to OmniFocus",
 	"label": "Trello to OmniFocus",
 	"shortLabel": "Trello to OmniFocus",
@@ -16,16 +16,30 @@
 		// selection options: columns, document, editor, items, nodes, outline, styles
 
 
-		ofTrelloFolderName = 'Trello'
+		// Note: after a first sync, it's possible to rename the [begin] of the Trello
+		// tags in OmniFocus. For example, a tag named "Trello : Waiting" could be renamed
+		// to "Trello : [Clock emoticon] Waiting" without problems.
+
+		// These parameters can be customized.
+		ofTrelloFolderName = 'Trello'  // Name of the folder to put Trello projects in
+		ofTrelloTagName = 'Trello'     // Name of the tag folder for Trello labels
 
 		// get your key at https://trello.com/1/appKey/generate
-		trelloAppKey = "XXXXXXXXXXX"
+		trelloAppKey = "XXXXXXXXXXXX"
 
 		// then get your token at
-		// https://trello.com/1/authorize?key=**YOURKEY**&name=TrelloOmniFocus&expiration=never&response_type=token&scope=read
-		trelloUserToken = "XXXXXXXXXXX"
+		// https://trello.com/1/authorize?key=**YOURKEY**&name=TrelloToOmniFocus&expiration=never&response_type=token&scope=read
+		trelloUserToken = "XXXXXXXXXXXXXX"
 
 	
+		// *****************************************************
+		// Add folder ofTrelloTagName if it doesn't already exist
+		// *****************************************************
+		ofTrelloTag = tags.byName(ofTrelloTagName)
+		if (ofTrelloTag == null) {
+			ofTrelloTag = new Tag(ofTrelloTagName)
+		}
+
 		// *****************************************************
 		// Add folder ofTrelloFolderName if it doesn't already exist
 		// *****************************************************
@@ -84,10 +98,10 @@
 				processCard(card, board, list)
 			})
 		}
-		
+
 		function processCard(card, board, list){
 			//console.log(board.name + ' ' + list.name + ' ' + card.name)
-
+			
 			var projectName = board.name
 			var taskName = "Trello : " + list.name + " : " + card.name
 			
@@ -128,6 +142,36 @@
 			} else {
 				task.dueDate = new Date(card.due)
 			}
+			
+			
+			// Labels
+			
+			// Remove all tags in the task that are Trello labels
+			ofTrelloTag.children.forEach(
+				function deleteTask(tag){
+					task.removeTag(tag)
+				}
+			)
+			
+			card.labels.forEach(
+				function processLabel(label){
+					tagName = label.name
+					// console.log(label.name)
+
+					// Find the corresponding tag in OmniFocus, or create it.
+					function tagHasName(tag){
+						return tag.name.endsWith(tagName)
+					}
+					var tag = ofTrelloTag.children.find(tagHasName)
+					if (tag == null) {
+						tag = new Tag(tagName, ofTrelloTag)
+					}
+					
+					// Add the tag to the task in OmniFocus
+					task.addTag(tag)
+					
+				}
+			)		
 		}
 
 
