@@ -4,11 +4,11 @@
 		// selection options: columns, document, editor, items, nodes, outline, styles
 
         // Add code to run when the action is invoked
-        ghRepositories = [['felixchenier', 'KineticsToolkit'],
-                          ['felixchenier', 'NextWheel'],
-                          ['wheelsims', 'vr_assets_common']]
+        ghRepositories = [['owner_eg_your_username_or_organization_name', 'repo_name1'],
+                          ['owner_eg_your_username_or_organization_name', 'repo_name2'],
+                          ['owner_eg_your_username_or_organization_name', 'repo_name3']]
 
-		ghUserName = 'felixchenier'
+		ghUserName = 'your_github_username'
 		ghRepositories.forEach(processRepository)
 
 
