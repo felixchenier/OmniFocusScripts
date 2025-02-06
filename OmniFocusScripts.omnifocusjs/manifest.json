@@ -1,0 +1,21 @@
+{
+  "defaultLocale": "en",
+  "author": "Felix Chenier",
+  "identifier": "com.felixchenier.OmniFocusScripts",
+  "version": "1.0",
+  "description": "A collection of OmniFocus Scripts. See https://github.com/felixchenier/OmniFocusScripts",
+  "actions": [
+    {
+      "image": "trello.png",
+      "identifier": "TrelloToOmniFocus"
+    },
+    {
+      "image": "github.png",
+      "identifier": "GitHubToOmniFocus"
+    },
+    {
+      "identifier": "NewSchedule"
+    }
+  ],
+  "libraries": []
+}
